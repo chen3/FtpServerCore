@@ -2,34 +2,34 @@
 
 // add necessary includes here
 
-class main : public QObject
+class Main : public QObject
 {
     Q_OBJECT
 
 public:
-    main();
-    ~main();
+    Main();
+    ~Main();
 
 private slots:
     void test_case1();
 
 };
 
-main::main()
+Main::Main()
 {
 
 }
 
-main::~main()
+Main::~Main()
 {
 
 }
 
-void main::test_case1()
+void Main::test_case1()
 {
 
 }
 
-QTEST_APPLESS_MAIN(main)
+QTEST_APPLESS_MAIN(Main)
 
 #include "tst_main.moc"

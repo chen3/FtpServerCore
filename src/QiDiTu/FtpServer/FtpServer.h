@@ -1,7 +1,8 @@
 #pragma once
 
-#include "IUserManager.h"
+#include "User\IUserManager.h"
 
+#include <QSharedPointer>
 #include <QTcpServer>
 
 namespace QiDiTu {
@@ -11,15 +12,19 @@ class FtpServer : public QObject
     Q_OBJECT
 
 private:
-    IUserManager userManager;
+    QSharedPointer<User::IUserManager> userManager;
 
 public:
-    explicit FtpServer(IUserManager userManager, QObject *parent = nullptr);
+    explicit FtpServer(QSharedPointer<User::IUserManager> userManager,
+                       QObject *parent = nullptr);
+
     /*!
      * \brief start ftp server
      * \sa stop()
      */
-    void start();
+    void start(const QHostAddress &address = QHostAddress::Any, quint16 port = 0);
+
+    bool isRuning() const;
 
     /*!
      * \brief stop ftp server

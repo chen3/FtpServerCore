@@ -18,5 +18,3 @@ public slots:
 
 } // namespace FtpServer
 } // namespace QiDiTu
-
-#endif // USER_H

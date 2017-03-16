@@ -9,11 +9,11 @@ TARGET = FtpServerCore
 
 SOURCES += main.cpp \
     QiDiTu/FtpServer/FtpServer.cpp \
-    QiDiTu/FtpServer/User.cpp \
-    QiDiTu/FtpServer/UserManager.cpp
+    QiDiTu/FtpServer/User/User.cpp \
+    QiDiTu/FtpServer/User/UserManager.cpp
 
 HEADERS += \
     QiDiTu/FtpServer/FtpServer.h \
-    QiDiTu/FtpServer/User.h \
-    QiDiTu/FtpServer/UserManager.h \
-    QiDiTu/FtpServer/IUserManager.h
+    QiDiTu/FtpServer/User/IUSerManager.h \
+    QiDiTu/FtpServer/User/User.h \
+    QiDiTu/FtpServer/User/UserManager.h

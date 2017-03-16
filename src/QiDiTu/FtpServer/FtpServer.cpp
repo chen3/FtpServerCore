@@ -6,16 +6,22 @@
 namespace QiDiTu {
 namespace FtpServer {
 
-FtpServer::FtpServer(QObject *parent)
+FtpServer::FtpServer(QSharedPointer<User::IUserManager> userManager, QObject *parent)
     : QObject(parent)
+    , userManager(userManager)
 {
     connect(&server,    &QTcpServer::newConnection,
             this,       &FtpServer::onServerNewConnection);
 }
 
-void FtpServer::start()
+void FtpServer::start(const QHostAddress &address, quint16 port)
 {
-    server.listen(QHostAddress::Any, 21);
+    server.listen(address, port);
+}
+
+bool FtpServer::isRuning() const
+{
+    return server.isListening();
 }
 
 void FtpServer::stop()
