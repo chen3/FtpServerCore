@@ -1,5 +1,8 @@
 #include "FtpServer.h"
 
+#include "BackgroundThread.h"
+#include "User\IUserManager.h"
+
 #include <QDebug>
 #include <QHostAddress>
 
@@ -8,7 +11,7 @@ namespace FtpServer {
 
 FtpServer::FtpServer(QSharedPointer<User::IUserManager> userManager, QObject *parent)
     : QObject(parent)
-    , userManager(userManager)
+    , _userManager(userManager)
 {
     connect(&server,    &QTcpServer::newConnection,
             this,       &FtpServer::onServerNewConnection);
@@ -29,9 +32,23 @@ void FtpServer::stop()
     server.close();
 }
 
+QSharedPointer<User::IUserManager> FtpServer::userManager()
+{
+    return _userManager;
+}
+
+QString FtpServer::welcomeMessage()
+{
+    static QString welcome = QStringLiteral("Welcome.");
+    return welcome;
+}
+
 void FtpServer::onServerNewConnection()
 {
-    qDebug() << "new connect";
+    qDebug() << "new connection";
+    BackgroundThread* thread = new BackgroundThread(server.nextPendingConnection(),
+                                                    sharedFromThis());
+    thread->start();
 }
 
 } // namespace FtpServer

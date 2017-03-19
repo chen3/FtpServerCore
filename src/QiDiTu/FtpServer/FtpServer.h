@@ -1,18 +1,23 @@
 #pragma once
 
-#include "User\IUserManager.h"
-
 #include <QSharedPointer>
 #include <QTcpServer>
 
 namespace QiDiTu {
 namespace FtpServer {
-class FtpServer : public QObject
+
+namespace User {
+class IUserManager;
+}
+
+class FtpServer : public QObject , public QEnableSharedFromThis<FtpServer>
 {
     Q_OBJECT
 
 private:
-    QSharedPointer<User::IUserManager> userManager;
+    QSharedPointer<User::IUserManager> _userManager;
+    QTcpServer server;
+    void onServerNewConnection();
 
 public:
     explicit FtpServer(QSharedPointer<User::IUserManager> userManager,
@@ -32,10 +37,11 @@ public:
      */
     void stop();
 
-private:
-    QTcpServer server;
-    void onServerNewConnection();
+    QSharedPointer<User::IUserManager> userManager();
+
+    QString welcomeMessage();
 
 };
+
 } // namespace FtpServer
 } // namespace QiDiTu
