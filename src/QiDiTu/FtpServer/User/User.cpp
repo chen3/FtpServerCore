@@ -10,6 +10,16 @@ User::User(QObject *parent)
 
 }
 
+QString User::username() const
+{
+    return _username;
+}
+
+bool User::isNeedPassword() const
+{
+    return _isNeedPassword;
+}
+
 } // namespace User
 } // namespace FtpServer
 } // namespace QiDiTu

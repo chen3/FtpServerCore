@@ -11,6 +11,9 @@ class IUser : public QObject
 public:
     using QObject::QObject;
 
+    virtual QString username() const = 0;
+    virtual bool isNeedPassword() const = 0;
+
 };
 
 }
