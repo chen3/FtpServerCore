@@ -24,7 +24,7 @@ private:
         notLogged, logging, logged
     };
     State state{State::notLogged};
-    QSharedPointer<User::IUser> user;
+    QSharedPointer<User::IUser> currUser;
 
 public:
     BackgroundThread(QTcpSocket* socket, QSharedPointer<FtpServer> server);

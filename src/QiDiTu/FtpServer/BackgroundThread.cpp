@@ -64,7 +64,7 @@ void BackgroundThread::run()
             continue;
         }
     }
-    qDebug() << "close";
+    qDebug() << "closed";
 }
 
 void BackgroundThread::reply(qint32 responseCode, QString message)
