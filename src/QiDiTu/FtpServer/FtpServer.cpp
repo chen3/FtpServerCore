@@ -37,12 +37,6 @@ QSharedPointer<User::IUserManager> FtpServer::userManager()
     return _userManager;
 }
 
-QString FtpServer::welcomeMessage()
-{
-    static QString welcome = QStringLiteral("Welcome.");
-    return welcome;
-}
-
 void FtpServer::onServerNewConnection()
 {
     qDebug() << "new connection";

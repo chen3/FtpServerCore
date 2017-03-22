@@ -15,7 +15,6 @@ BackgroundThread::BackgroundThread(QTcpSocket *socket, QSharedPointer<FtpServer>
     , socket(socket)
     , server(server)
 {
-
     if(socket == nullptr) {
         throw std::invalid_argument("socket");
     }
@@ -25,7 +24,7 @@ BackgroundThread::BackgroundThread(QTcpSocket *socket, QSharedPointer<FtpServer>
 
 void BackgroundThread::run()
 {
-    reply(220, server->welcomeMessage());
+    reply(220, server->property("welcomeMessage").toString());
     QByteArray data;
     int index;
 
@@ -69,7 +68,9 @@ void BackgroundThread::run()
 
 void BackgroundThread::reply(qint32 responseCode, QString message)
 {
-    socket->write(QByteArray::number(responseCode) + " " + message.toLatin1() + "\r\n");
+    QByteArray msg = QByteArray::number(responseCode) + " " + message.toLatin1() + "\r\n";
+    qDebug() << "reply:" << msg;
+    socket->write(msg);
 }
 
 void BackgroundThread::user(QByteArray username)
@@ -84,14 +85,44 @@ void BackgroundThread::user(QByteArray username)
         state = State::logging;
     }
     else {
-        reply(230, "user logged in");
+        reply(230, "user logged on");
         state = State::logged;
     }
 }
 
 void BackgroundThread::quit()
 {
+    reply(221, server->property("quitMessage").toString());
     socket->close();
+}
+
+void BackgroundThread::syst()
+{
+    reply(215, server->property("name").toString());
+}
+
+void BackgroundThread::pwd()
+{
+    reply(257, R"("/" directory created)");
+}
+
+void BackgroundThread::type(QByteArray data)
+{
+    if(data.length() > 1) {
+        reply(502, data);
+        return;
+    }
+    switch (data.toLower().at(0)) {
+        case 'i': {
+            transferType = TransferType::Binary;
+        } break;
+        case 'a': {
+            transferType = TransferType::Ascii;
+        } break;
+        default: {
+            reply(502, data);
+        } break;
+    }
 }
 
 } // namespace FtpServer

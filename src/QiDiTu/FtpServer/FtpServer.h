@@ -13,6 +13,9 @@ class IUserManager;
 class FtpServer : public QObject , public QEnableSharedFromThis<FtpServer>
 {
     Q_OBJECT
+    Q_PROPERTY(QString welcomeMessage MEMBER _welcomeMessage)
+    Q_PROPERTY(QString name MEMBER _name)
+    Q_PROPERTY(QString quitMessage MEMBER _quit)
 
 private:
     QSharedPointer<User::IUserManager> _userManager;
@@ -39,7 +42,10 @@ public:
 
     QSharedPointer<User::IUserManager> userManager();
 
-    QString welcomeMessage();
+private:
+    QString _welcomeMessage{QStringLiteral("Welcome.")};
+    QString _name{QStringLiteral("QtFtp")};
+    QString _quit{QStringLiteral("Goodbye")};
 
 };
 
