@@ -19,6 +19,7 @@ public:
 
     virtual QString username() const override;
     virtual bool isNeedPassword() const override;
+    virtual bool isPassword(const QString &password) const override;
 
 };
 

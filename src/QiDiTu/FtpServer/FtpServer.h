@@ -9,6 +9,9 @@ namespace FtpServer {
 namespace User {
 class IUserManager;
 }
+namespace FileManager {
+class IFileManager;
+}
 
 class FtpServer : public QObject , public QEnableSharedFromThis<FtpServer>
 {
@@ -19,11 +22,12 @@ class FtpServer : public QObject , public QEnableSharedFromThis<FtpServer>
 
 private:
     QSharedPointer<User::IUserManager> _userManager;
+    QSharedPointer<FileManager::IFileManager> _fileManager;
     QTcpServer server;
-    void onServerNewConnection();
 
 public:
     explicit FtpServer(QSharedPointer<User::IUserManager> userManager,
+                       QSharedPointer<FileManager::IFileManager> fileManager,
                        QObject *parent = nullptr);
 
     /*!
@@ -42,10 +46,13 @@ public:
 
     QSharedPointer<User::IUserManager> userManager();
 
+    QSharedPointer<FileManager::IFileManager> fileManager();
+
 private:
     QString _welcomeMessage{QStringLiteral("Welcome.")};
-    QString _name{QStringLiteral("QtFtp")};
+    QString _name{QStringLiteral("UNIX emulated by QtFtp")};
     QString _quit{QStringLiteral("Goodbye")};
+    void onServerNewConnection();
 
 };
 

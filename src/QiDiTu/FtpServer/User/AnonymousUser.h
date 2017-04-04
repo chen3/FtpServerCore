@@ -10,8 +10,10 @@ class AnonymousUser : public IUser
 {
 public:
     using IUser::IUser;
-    virtual QString username() const;
-    virtual bool isNeedPassword() const;
+    virtual QString username() const override;
+    virtual bool isNeedPassword() const override;
+    virtual bool isPassword(const QString &password) const override;
+
 };
 
 } // namespace User

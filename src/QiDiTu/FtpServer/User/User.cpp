@@ -20,6 +20,11 @@ bool User::isNeedPassword() const
     return _isNeedPassword;
 }
 
+bool User::isPassword(const QString &password) const
+{
+    return _password == password;
+}
+
 } // namespace User
 } // namespace FtpServer
 } // namespace QiDiTu

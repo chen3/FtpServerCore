@@ -13,6 +13,7 @@ public:
 
     virtual QString username() const = 0;
     virtual bool isNeedPassword() const = 0;
+    virtual bool isPassword(const QString& password) const = 0;
 
 };
 
