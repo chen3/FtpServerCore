@@ -418,7 +418,11 @@ void BackgroundThread::rnto(QByteArray name)
     }
     QFile file(fileManager->mapPath(currUser, rnfrName));
     rnfrName.clear();
-    if(file.rename(name)) {
+    QString filePath = name;
+    if(!filePath.startsWith('/')) {
+        filePath = currentFtpDir + filePath;
+    }
+    if(file.rename(fileManager->mapPath(currUser, filePath))) {
         reply(250, "rename successful");
     }
     else {
